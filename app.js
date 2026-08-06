@@ -89,6 +89,20 @@ function anualRows(year) {
     return { m, label, recebido, aReceber };
   });
 }
+function gastosAnualRows(year) {
+  const fixosMensal = data.gastosFixos.reduce((s, x) => s + x.valor, 0);
+  return MONTHS.map((label, m) => {
+    const mk = monthKey(year, m);
+    const aleatorios = data.gastosAleatorios.filter((x) => x.data && x.data.slice(0, 7) === mk).reduce((s, x) => s + x.valor, 0);
+    return { m, label, fixos: fixosMensal, aleatorios, total: fixosMensal + aleatorios };
+  });
+}
+function economiaRows(year) {
+  const receitas = anualRows(year);
+  const gastos = gastosAnualRows(year);
+  return MONTHS.map((label, m) => ({ m, label, saldo: receitas[m].recebido - gastos[m].total }));
+}
+function isYearTab(tab) { return tab === "anual" || tab === "gastosanuais" || tab === "economias"; }
 
 function currentList() {
   if (state.tab === "receita") return data.atendimentos;
@@ -127,7 +141,7 @@ function render() {
   renderDatebar();
   renderTodayChip();
   renderMain();
-  $("add-btn").classList.toggle("hidden", state.tab === "anual" || state.tab === "economias");
+  $("add-btn").classList.toggle("hidden", isYearTab(state.tab));
 }
 
 function renderResumo() {
@@ -141,6 +155,30 @@ function renderResumo() {
     saldoEl.classList.add("pos");
     saldoEl.classList.remove("neg");
     $("resumo-sub").textContent = `A receber ${money(aReceberAno)}`;
+    return;
+  }
+  if (state.tab === "gastosanuais") {
+    const rows = gastosAnualRows(state.year);
+    const totalAno = rows.reduce((s, r) => s + r.total, 0);
+    const aleatoriosAno = rows.reduce((s, r) => s + r.aleatorios, 0);
+    $("resumo-hi").textContent = `Gastos de ${state.year}`;
+    const saldoEl = $("resumo-saldo");
+    saldoEl.textContent = money(totalAno);
+    saldoEl.classList.remove("pos", "neg");
+    $("resumo-sub").textContent = `Fixos ${money(rows[0].fixos)}/mês · Aleatórios ${money(aleatoriosAno)} no ano`;
+    return;
+  }
+  if (state.tab === "economias") {
+    const rows = economiaRows(state.year);
+    const totalAno = rows.reduce((s, r) => s + r.saldo, 0);
+    const isProfit = totalAno >= 0;
+    $("resumo-hi").textContent = `${isProfit ? "Lucro" : "Déficit"} de ${state.year}`;
+    const saldoEl = $("resumo-saldo");
+    saldoEl.textContent = money(Math.abs(totalAno));
+    saldoEl.classList.toggle("pos", isProfit);
+    saldoEl.classList.toggle("neg", !isProfit);
+    const mesesLucro = rows.filter((r) => r.saldo >= 0).length;
+    $("resumo-sub").textContent = `${mesesLucro} de 12 meses no lucro`;
     return;
   }
   const t = totals();
@@ -158,11 +196,11 @@ function renderTabSwitch() {
 
 function renderDatebar() {
   $("datebar").classList.toggle("hidden", state.tab === "fixos");
-  $("month-label").textContent = state.tab === "anual" ? String(state.year) : `${MONTHS[state.month]} de ${state.year}`;
+  $("month-label").textContent = isYearTab(state.tab) ? String(state.year) : `${MONTHS[state.month]} de ${state.year}`;
 }
 
 function renderTodayChip() {
-  $("today-btn").textContent = state.tab === "anual" ? "Este ano" : "Este mês";
+  $("today-btn").textContent = isYearTab(state.tab) ? "Este ano" : "Este mês";
 }
 
 function stat(v, l) { return `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`; }
@@ -243,6 +281,10 @@ function renderMain() {
     renderAnual(main);
     return;
   }
+  if (state.tab === "gastosanuais") {
+    renderGastosAnuais(main);
+    return;
+  }
   if (state.tab === "economias") {
     renderEconomias(main);
     return;
@@ -274,21 +316,30 @@ function renderAnual(main) {
   main.appendChild(list);
 }
 
-function renderEconomias(main) {
-  const t = totals();
+function renderGastosAnuais(main) {
+  const rows = gastosAnualRows(state.year);
+  const totalAno = rows.reduce((s, r) => s + r.total, 0);
   const statsWrap = document.createElement("div");
   statsWrap.className = "stats";
-  statsWrap.innerHTML = stat(money(t.receita), "Receita") + stat(money(t.fixos), "Gastos fixos") + stat(money(t.aleatorios), "Gastos aleatórios");
+  statsWrap.innerHTML = stat(money(totalAno), "Total do ano") + stat(money(totalAno / 12), "Média mensal") + stat(money(rows[0].fixos), "Fixos mensal");
   main.appendChild(statsWrap);
+  const list = document.createElement("div");
+  rows.forEach((r) => list.appendChild(renderGastoMonthRow(r)));
+  main.appendChild(list);
+}
 
-  const isProfit = t.saldo >= 0;
-  const card = document.createElement("div");
-  card.className = "result-card";
-  card.innerHTML = `
-    <div class="rl">${isProfit ? "Lucro" : "Déficit"} de ${MONTHS[state.month]}</div>
-    <div class="rv ${isProfit ? "pos" : "neg"}">${money(Math.abs(t.saldo))}</div>
-  `;
-  main.appendChild(card);
+function renderEconomias(main) {
+  const rows = economiaRows(state.year);
+  const totalAno = rows.reduce((s, r) => s + r.saldo, 0);
+  const mesesLucro = rows.filter((r) => r.saldo >= 0).length;
+  const isProfitYear = totalAno >= 0;
+  const statsWrap = document.createElement("div");
+  statsWrap.className = "stats";
+  statsWrap.innerHTML = stat(money(Math.abs(totalAno)), isProfitYear ? "Lucro do ano" : "Déficit do ano") + stat(String(mesesLucro), mesesLucro === 1 ? "Mês no lucro" : "Meses no lucro") + stat(String(12 - mesesLucro), (12 - mesesLucro) === 1 ? "Mês no déficit" : "Meses no déficit");
+  main.appendChild(statsWrap);
+  const list = document.createElement("div");
+  rows.forEach((r) => list.appendChild(renderEconomiaMonthRow(r)));
+  main.appendChild(list);
 }
 
 function renderMonthRow(r) {
@@ -310,6 +361,44 @@ function renderMonthRow(r) {
     state.month = r.m;
     render();
   });
+  return el;
+}
+
+function renderGastoMonthRow(r) {
+  const el = document.createElement("div");
+  el.className = "entry";
+  const label = r.label.charAt(0).toUpperCase() + r.label.slice(1);
+  el.innerHTML = `
+    <div class="entry-left">
+      <div class="entry-body">
+        <div class="entry-name">${label}</div>
+        <div class="entry-date">Fixos ${money(r.fixos)} · Aleatórios ${money(r.aleatorios)}</div>
+      </div>
+    </div>
+    <div class="entry-value">${money(r.total)}</div>
+  `;
+  el.addEventListener("click", () => {
+    state.tab = "aleatorios";
+    state.month = r.m;
+    render();
+  });
+  return el;
+}
+
+function renderEconomiaMonthRow(r) {
+  const el = document.createElement("div");
+  el.className = "entry static";
+  const label = r.label.charAt(0).toUpperCase() + r.label.slice(1);
+  const isProfit = r.saldo >= 0;
+  el.innerHTML = `
+    <div class="entry-left">
+      <div class="entry-body">
+        <div class="entry-name">${label}</div>
+        <div class="entry-date">${isProfit ? "Lucro" : "Déficit"}</div>
+      </div>
+    </div>
+    <div class="entry-value ${isProfit ? "pos" : "neg"}">${money(Math.abs(r.saldo))}</div>
+  `;
   return el;
 }
 
@@ -448,8 +537,8 @@ $("tab-switch").addEventListener("click", (e) => {
   state.tab = btn.dataset.tab;
   render();
 });
-$("nav-back").addEventListener("click", () => (state.tab === "anual" ? navYear(-1) : navMonth(-1)));
-$("nav-fwd").addEventListener("click", () => (state.tab === "anual" ? navYear(1) : navMonth(1)));
+$("nav-back").addEventListener("click", () => (isYearTab(state.tab) ? navYear(-1) : navMonth(-1)));
+$("nav-fwd").addEventListener("click", () => (isYearTab(state.tab) ? navYear(1) : navMonth(1)));
 $("today-btn").addEventListener("click", goToday);
 $("add-btn").addEventListener("click", () => openSheet(null));
 $("cancel-btn").addEventListener("click", closeSheet);
