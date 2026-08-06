@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Minhas Finanças</title>
+<meta name="theme-color" content="#F5F6F8" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#10141C" media="(prefers-color-scheme: dark)" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Finanças" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png" />
+<link rel="manifest" href="manifest.json" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app-screen">
+  <header class="app-header">
+    <div class="brand-row">
+      <div class="brand">
+        <img src="icons/logo-full.png" alt="Mateus Lerbach — Psicólogo" class="logo-light" />
+        <img src="icons/logo-full-light.png" alt="Mateus Lerbach — Psicólogo" class="logo-dark" />
+      </div>
+      <button class="today-chip" id="today-btn">Este mês</button>
+    </div>
+  </header>
+
+  <div class="greeting">
+    <div class="hi" id="resumo-hi">Resumo de agosto</div>
+    <div class="headline" id="resumo-saldo">R$ 0,00</div>
+    <div class="sub" id="resumo-sub">Receita R$ 0,00 · Gastos R$ 0,00</div>
+  </div>
+
+  <div class="agenda-switch" id="tab-switch">
+    <button class="on" data-tab="receita">Receita</button>
+    <button data-tab="anual">Receitas anuais</button>
+    <button data-tab="fixos">Gastos fixos</button>
+    <button data-tab="aleatorios">Gastos aleatórios</button>
+    <button data-tab="economias">Economias</button>
+  </div>
+
+  <div class="datebar" id="datebar">
+    <div class="label" id="month-label"></div>
+    <div class="arrows">
+      <button id="nav-back" aria-label="Mês anterior">‹</button>
+      <button id="nav-fwd" aria-label="Próximo mês">›</button>
+    </div>
+  </div>
+
+  <main id="main-content"></main>
+
+  <div class="fab-row">
+    <button class="fab-main" id="add-btn"><span class="plus">+</span>Novo</button>
+  </div>
+</div>
+
+<div class="backdrop hidden" id="entry-sheet">
+  <div class="sheet">
+    <div class="grabber"></div>
+    <h2 id="sheet-title">Novo paciente</h2>
+    <div class="field" id="field-nome">
+      <label id="label-nome">Paciente</label>
+      <input id="f-nome" type="text" placeholder="Nome do paciente" />
+    </div>
+    <div class="row2" id="field-receita-valores">
+      <div class="field">
+        <label>Valor da sessão</label>
+        <input id="f-valor-sessao" type="text" inputmode="decimal" placeholder="0,00" />
+      </div>
+      <div class="field">
+        <label id="label-sessoes">Sessões</label>
+        <input id="f-sessoes" type="number" inputmode="numeric" min="0" step="1" placeholder="0" />
+      </div>
+    </div>
+    <div class="field" id="field-encerrar">
+      <label>Encerrar atendimento a partir de (opcional)</label>
+      <input id="f-encerrar" type="month" />
+    </div>
+    <div class="field" id="field-valor">
+      <label>Valor</label>
+      <input id="f-valor" type="text" inputmode="decimal" placeholder="0,00" />
+    </div>
+    <div class="field" id="field-data">
+      <label>Data</label>
+      <input id="f-data" type="date" />
+    </div>
+    <div class="field" id="field-repeat">
+      <label>Repetir por quantos meses</label>
+      <input id="f-repeat" type="number" inputmode="numeric" min="1" step="1" placeholder="1" />
+    </div>
+    <div class="actions">
+      <button class="btn" id="cancel-btn">Cancelar</button>
+      <button class="btn danger hidden" id="delete-btn">Excluir</button>
+      <button class="btn primary" id="save-btn">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
