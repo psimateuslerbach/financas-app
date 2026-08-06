@@ -275,32 +275,34 @@ function togglePago(item) {
 }
 
 function renderMain() {
-  const main = $("main-content");
-  main.innerHTML = "";
-  if (state.tab === "anual") {
-    renderAnual(main);
-    return;
+  renderTabInto($("main-content"), state.tab);
+}
+
+function renderTabInto(container, tab) {
+  const savedTab = state.tab;
+  state.tab = tab;
+  container.innerHTML = "";
+  if (tab === "anual") {
+    renderAnual(container);
+  } else if (tab === "gastosanuais") {
+    renderGastosAnuais(container);
+  } else if (tab === "economias") {
+    renderEconomias(container);
+  } else {
+    const items = listFor(tab);
+    container.appendChild(renderStats(items));
+    if (!items.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.innerHTML = emptyMessage();
+      container.appendChild(empty);
+    } else {
+      const list = document.createElement("div");
+      items.forEach((item) => list.appendChild(renderEntry(item)));
+      container.appendChild(list);
+    }
   }
-  if (state.tab === "gastosanuais") {
-    renderGastosAnuais(main);
-    return;
-  }
-  if (state.tab === "economias") {
-    renderEconomias(main);
-    return;
-  }
-  const items = listFor(state.tab);
-  main.appendChild(renderStats(items));
-  if (!items.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.innerHTML = emptyMessage();
-    main.appendChild(empty);
-    return;
-  }
-  const list = document.createElement("div");
-  items.forEach((item) => list.appendChild(renderEntry(item)));
-  main.appendChild(list);
+  state.tab = savedTab;
 }
 
 function renderAnual(main) {
@@ -530,6 +532,82 @@ function goToday() {
   state.month = now.getMonth();
   render();
 }
+
+const TAB_ORDER = ["receita", "anual", "fixos", "aleatorios", "gastosanuais", "economias"];
+let swipe = null;
+let swipeAnimating = false;
+
+function onSwipeStart(e) {
+  if (swipeAnimating || e.touches.length !== 1 || !$("entry-sheet").classList.contains("hidden")) return;
+  const t = e.touches[0];
+  swipe = { startX: t.clientX, startY: t.clientY, dragging: false, dir: 0, dx: 0, targetTab: null, incoming: null };
+}
+
+function onSwipeMove(e) {
+  if (!swipe) return;
+  const t = e.touches[0];
+  const dx = t.clientX - swipe.startX;
+  const dy = t.clientY - swipe.startY;
+  if (!swipe.dragging) {
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    if (Math.abs(dy) >= Math.abs(dx)) { swipe = null; return; }
+    const idx = TAB_ORDER.indexOf(state.tab);
+    const dir = dx < 0 ? 1 : -1;
+    const targetIdx = idx + dir;
+    if (targetIdx < 0 || targetIdx >= TAB_ORDER.length) { swipe = null; return; }
+    swipe.dragging = true;
+    swipe.dir = dir;
+    swipe.targetTab = TAB_ORDER[targetIdx];
+    const incoming = document.createElement("main");
+    incoming.className = "incoming";
+    incoming.style.transform = `translateX(${dir * 100}%)`;
+    $("swipe-viewport").appendChild(incoming);
+    renderTabInto(incoming, swipe.targetTab);
+    swipe.incoming = incoming;
+  }
+  e.preventDefault();
+  swipe.dx = dx;
+  const width = $("swipe-viewport").clientWidth || 1;
+  const pct = Math.max(-1, Math.min(1, dx / width)) * 100;
+  $("main-content").style.transform = `translateX(${pct}%)`;
+  swipe.incoming.style.transform = `translateX(${swipe.dir * 100 + pct}%)`;
+}
+
+function onSwipeEnd() {
+  if (!swipe) { swipe = null; return; }
+  if (!swipe.dragging) { swipe = null; return; }
+  const main = $("main-content");
+  const width = $("swipe-viewport").clientWidth || 1;
+  const passed = Math.abs(swipe.dx) > width * 0.3;
+  const targetTab = swipe.targetTab;
+  const incoming = swipe.incoming;
+  swipeAnimating = true;
+  main.style.transition = "transform .22s cubic-bezier(.22,1,.36,1)";
+  incoming.style.transition = "transform .22s cubic-bezier(.22,1,.36,1)";
+  if (passed) {
+    main.style.transform = `translateX(${swipe.dir * -100}%)`;
+    incoming.style.transform = "translateX(0%)";
+  } else {
+    main.style.transform = "translateX(0%)";
+    incoming.style.transform = `translateX(${swipe.dir * 100}%)`;
+  }
+  setTimeout(() => {
+    main.style.transition = "";
+    main.style.transform = "";
+    incoming.remove();
+    swipeAnimating = false;
+    if (passed) {
+      state.tab = targetTab;
+      render();
+    }
+  }, 220);
+  swipe = null;
+}
+
+$("swipe-viewport").addEventListener("touchstart", onSwipeStart, { passive: true });
+$("swipe-viewport").addEventListener("touchmove", onSwipeMove, { passive: false });
+$("swipe-viewport").addEventListener("touchend", onSwipeEnd);
+$("swipe-viewport").addEventListener("touchcancel", onSwipeEnd);
 
 $("tab-switch").addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-tab]");

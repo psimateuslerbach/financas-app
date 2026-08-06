@@ -214,7 +214,9 @@ img.logo-light { display: block; }
 }
 .datebar .arrows button:active { transform: scale(.93); }
 
+.swipe-viewport { position: relative; overflow: hidden; }
 main { padding: 0 18px; }
+main.incoming { position: absolute; top: 0; left: 0; width: 100%; }
 
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; margin: 14px 0 20px; }
 .stats.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
