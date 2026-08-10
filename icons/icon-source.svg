@@ -1,16 +1,22 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.15" y2="1">
-      <stop offset="0%" stop-color="#F0AC57" />
-      <stop offset="35%" stop-color="#D3812F" />
-      <stop offset="70%" stop-color="#A85B20" />
-      <stop offset="100%" stop-color="#6E3812" />
+      <stop offset="0%" stop-color="#F7C077" />
+      <stop offset="22%" stop-color="#EA9D4B" />
+      <stop offset="50%" stop-color="#C9752B" />
+      <stop offset="78%" stop-color="#9A5620" />
+      <stop offset="100%" stop-color="#5E2E0E" />
     </linearGradient>
-    <radialGradient id="gloss" cx="50%" cy="10%" r="75%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55" />
-      <stop offset="35%" stop-color="#FFFFFF" stop-opacity="0.16" />
-      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0" />
+    <radialGradient id="gloss" cx="50%" cy="6%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
+      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.32" />
+      <stop offset="65%" stop-color="#FFFFFF" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
     </radialGradient>
+    <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3A1D08" stop-opacity="0" />
+      <stop offset="100%" stop-color="#3A1D08" stop-opacity="0.35" />
+    </linearGradient>
     <linearGradient id="bill" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#FFF8E4" />
       <stop offset="45%" stop-color="#F4E0AC" />
@@ -30,6 +36,22 @@
       <stop offset="45%" stop-color="#D42E3F" />
       <stop offset="100%" stop-color="#83121F" />
     </radialGradient>
+    <linearGradient id="calcBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#8A5A2E" />
+      <stop offset="55%" stop-color="#5A3414" />
+      <stop offset="100%" stop-color="#3A2009" />
+    </linearGradient>
+    <linearGradient id="calcScreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF3" />
+      <stop offset="100%" stop-color="#DCC384" />
+    </linearGradient>
+    <linearGradient id="calcKey" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FBF1D6" />
+      <stop offset="100%" stop-color="#E4C88C" />
+    </linearGradient>
+    <filter id="dropTiny" x="-80%" y="-80%" width="260%" height="260%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#2A1608" flood-opacity="0.55" />
+    </filter>
     <filter id="dropBig" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#301A06" flood-opacity="0.5" />
     </filter>
@@ -43,8 +65,10 @@
 
   <g clip-path="url(#roundClip)">
     <rect x="0" y="0" width="512" height="512" fill="url(#bg)" />
+    <rect x="0" y="0" width="512" height="512" fill="url(#bottomShade)" />
     <rect x="0" y="0" width="512" height="512" fill="url(#gloss)" />
-    <rect x="0" y="0" width="512" height="512" fill="none" stroke="#3E2109" stroke-opacity="0.35" stroke-width="6" />
+    <path d="M20 90 C 20 48 48 20 90 20 L 422 20 C 464 20 492 48 492 90" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round" />
+    <rect x="0" y="0" width="512" height="512" fill="none" stroke="#3E2109" stroke-opacity="0.4" stroke-width="6" />
   </g>
 
   <!-- cedula de tras -->
@@ -80,17 +104,20 @@
   <!-- moeda no canto, metalica -->
   <g filter="url(#dropSmall)" transform="translate(388 116)">
     <circle r="36" fill="url(#coin)" stroke="#5A3414" stroke-width="4" />
+    <circle r="32" fill="none" stroke="#7A4E22" stroke-width="1.5" opacity="0.5" />
     <circle r="27" fill="none" stroke="#5A3414" stroke-width="2" opacity="0.6" />
-    <path d="M-10 -22 A 30 30 0 0 1 20 -6" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.6" stroke-linecap="round" />
-    <g transform="translate(0 1)">
-      <rect x="-16" y="-21" width="32" height="42" rx="5" fill="#5A3414" />
-      <rect x="-12" y="-17" width="24" height="11" rx="1.5" fill="#F3E2B8" />
-      <rect x="-12" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
-      <rect x="-3" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
-      <rect x="6" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
-      <rect x="-12" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
-      <rect x="-3" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
-      <rect x="6" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+    <path d="M-14 -25 A 34 34 0 0 1 24 -8" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.7" stroke-linecap="round" />
+    <g transform="translate(0 1)" filter="url(#dropTiny)">
+      <rect x="-16" y="-21" width="32" height="42" rx="5" fill="url(#calcBody)" stroke="#2E1A08" stroke-width="1.2" />
+      <rect x="-15" y="-20" width="30" height="4" rx="2" fill="#A8794A" opacity="0.6" />
+      <rect x="-12" y="-17" width="24" height="11" rx="1.5" fill="url(#calcScreen)" stroke="#2E1A08" stroke-width="1" />
+      <rect x="-11" y="-16" width="10" height="3" rx="1.5" fill="#FFFFFF" opacity="0.7" />
+      <rect x="-12" y="-1" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
+      <rect x="-3" y="-1" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
+      <rect x="6" y="-1" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
+      <rect x="-12" y="8" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
+      <rect x="-3" y="8" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
+      <rect x="6" y="8" width="6" height="6" rx="1.4" fill="url(#calcKey)" stroke="#2E1A08" stroke-width="0.8" />
     </g>
   </g>
 
