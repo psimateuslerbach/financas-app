@@ -64,6 +64,10 @@
   <div class="sheet">
     <div class="grabber"></div>
     <h2 id="sheet-title">Novo paciente</h2>
+    <div class="pills" id="field-receita-tipo">
+      <button class="pill on" data-tipo="paciente" type="button">Paciente</button>
+      <button class="pill" data-tipo="avulso" type="button">Outro</button>
+    </div>
     <div class="field" id="field-nome">
       <label id="label-nome">Paciente</label>
       <input id="f-nome" type="text" placeholder="Nome do paciente" />
@@ -89,6 +93,16 @@
     <div class="field" id="field-data">
       <label>Data</label>
       <input id="f-data" type="date" />
+    </div>
+    <div class="row2" id="field-fixo-periodo">
+      <div class="field">
+        <label>Início (opcional)</label>
+        <input id="f-inicio" type="month" />
+      </div>
+      <div class="field">
+        <label>Fim (opcional)</label>
+        <input id="f-fim" type="month" />
+      </div>
     </div>
     <div class="field" id="field-repeat">
       <label>Repetir por quantos meses</label>

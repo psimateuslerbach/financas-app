@@ -335,6 +335,20 @@ main.incoming { position: absolute; top: 0; left: 0; width: 100%; }
 }
 .grabber { width: 38px; height: 4px; border-radius: 4px; background: var(--border); margin: 4px auto 14px; }
 .sheet h2 { font-size: 18px; font-weight: 700; letter-spacing: -.02em; margin: 0 0 16px; }
+.pills { display: flex; gap: 8px; margin-bottom: 16px; }
+.pills .pill {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  padding: 11px 0;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+}
+.pills .pill.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .field { margin-bottom: 13px; }
 .field label { display: block; font-size: 12px; font-weight: 650; color: var(--text-2); margin-bottom: 6px; }
 input {

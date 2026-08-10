@@ -18,6 +18,22 @@ function parseValor(raw) {
   return isNaN(n) ? NaN : n;
 }
 
+const IMPORT_PACIENTES = [
+  { nome:"Alexandre", valorSessao:500, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:100},"2025-02":{numSessoes:1,pago:true,valorSessao:200},"2025-03":{numSessoes:1,pago:true,valorSessao:150},"2025-04":{numSessoes:1,pago:true,valorSessao:250},"2025-05":{numSessoes:1,pago:true,valorSessao:280},"2025-06":{numSessoes:1,pago:true,valorSessao:280},"2025-07":{numSessoes:1,pago:true,valorSessao:350},"2025-08":{numSessoes:1,pago:true,valorSessao:350},"2025-09":{numSessoes:1,pago:true,valorSessao:280},"2025-10":{numSessoes:1,pago:true,valorSessao:210},"2025-11":{numSessoes:1,pago:true,valorSessao:280},"2025-12":{numSessoes:1,pago:true,valorSessao:280},"2026-02":{numSessoes:1,pago:true,valorSessao:300},"2026-03":{numSessoes:1,pago:true,valorSessao:400},"2026-04":{numSessoes:1,pago:true,valorSessao:500},"2026-05":{numSessoes:1,pago:true,valorSessao:340},"2026-06":{numSessoes:1,pago:false,valorSessao:500}} },
+  { nome:"Ana Júlia", valorSessao:280, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:150},"2025-02":{numSessoes:1,pago:true,valorSessao:200},"2025-03":{numSessoes:1,pago:true,valorSessao:150},"2025-04":{numSessoes:1,pago:true,valorSessao:250},"2025-05":{numSessoes:1,pago:true,valorSessao:200},"2025-06":{numSessoes:1,pago:true,valorSessao:240},"2025-07":{numSessoes:1,pago:true,valorSessao:300},"2025-08":{numSessoes:1,pago:true,valorSessao:240},"2025-09":{numSessoes:1,pago:true,valorSessao:200},"2025-10":{numSessoes:1,pago:true,valorSessao:240},"2025-11":{numSessoes:1,pago:true,valorSessao:200},"2025-12":{numSessoes:1,pago:false,valorSessao:180},"2026-02":{numSessoes:1,pago:true,valorSessao:210},"2026-03":{numSessoes:1,pago:true,valorSessao:280},"2026-04":{numSessoes:1,pago:true,valorSessao:350},"2026-05":{numSessoes:1,pago:true,valorSessao:280},"2026-06":{numSessoes:1,pago:false,valorSessao:280}} },
+  { nome:"Arthur", valorSessao:1000, meses:{"2025-10":{numSessoes:1,pago:true,valorSessao:200},"2025-11":{numSessoes:1,pago:true,valorSessao:800},"2025-12":{numSessoes:1,pago:false,valorSessao:1000}}, inactiveFrom:"2026-01" },
+  { nome:"Bruno", valorSessao:120, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:300},"2025-02":{numSessoes:1,pago:true,valorSessao:320},"2025-03":{numSessoes:1,pago:true,valorSessao:240},"2025-04":{numSessoes:1,pago:true,valorSessao:300},"2025-05":{numSessoes:1,pago:true,valorSessao:240},"2025-06":{numSessoes:1,pago:true,valorSessao:120}}, inactiveFrom:"2025-07" },
+  { nome:"Carlos", valorSessao:240, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:260},"2025-02":{numSessoes:1,pago:true,valorSessao:160},"2025-03":{numSessoes:1,pago:true,valorSessao:160},"2025-04":{numSessoes:1,pago:true,valorSessao:200},"2025-05":{numSessoes:1,pago:true,valorSessao:260},"2025-06":{numSessoes:1,pago:true,valorSessao:260},"2025-07":{numSessoes:1,pago:true,valorSessao:160},"2025-08":{numSessoes:1,pago:true,valorSessao:160},"2025-09":{numSessoes:1,pago:true,valorSessao:160},"2025-10":{numSessoes:1,pago:true,valorSessao:160},"2025-11":{numSessoes:1,pago:true,valorSessao:260},"2025-12":{numSessoes:1,pago:true,valorSessao:200},"2026-01":{numSessoes:1,pago:true,valorSessao:120},"2026-03":{numSessoes:1,pago:true,valorSessao:240},"2026-04":{numSessoes:1,pago:true,valorSessao:300},"2026-05":{numSessoes:1,pago:true,valorSessao:240},"2026-06":{numSessoes:1,pago:false,valorSessao:240}} },
+  { nome:"Danielle", valorSessao:200, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:100},"2025-02":{numSessoes:1,pago:true,valorSessao:75},"2025-03":{numSessoes:1,pago:true,valorSessao:75},"2025-04":{numSessoes:1,pago:true,valorSessao:125},"2025-05":{numSessoes:1,pago:true,valorSessao:120},"2025-06":{numSessoes:1,pago:true,valorSessao:120},"2025-07":{numSessoes:1,pago:true,valorSessao:150},"2025-08":{numSessoes:1,pago:true,valorSessao:120},"2025-09":{numSessoes:1,pago:true,valorSessao:120},"2025-10":{numSessoes:1,pago:true,valorSessao:120},"2025-11":{numSessoes:1,pago:true,valorSessao:120},"2025-12":{numSessoes:1,pago:false,valorSessao:90},"2026-02":{numSessoes:1,pago:true,valorSessao:90},"2026-03":{numSessoes:1,pago:true,valorSessao:200},"2026-04":{numSessoes:1,pago:true,valorSessao:250},"2026-05":{numSessoes:1,pago:true,valorSessao:200},"2026-06":{numSessoes:1,pago:false,valorSessao:200}} },
+  { nome:"Emily", valorSessao:60, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:60}}, inactiveFrom:"2025-02" },
+  { nome:"Jasmine", valorSessao:200, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:120},"2025-07":{numSessoes:1,pago:true,valorSessao:160},"2025-08":{numSessoes:1,pago:true,valorSessao:160},"2025-09":{numSessoes:1,pago:true,valorSessao:160},"2025-10":{numSessoes:1,pago:true,valorSessao:160},"2025-11":{numSessoes:1,pago:true,valorSessao:160},"2025-12":{numSessoes:1,pago:true,valorSessao:160},"2026-03":{numSessoes:1,pago:true,valorSessao:160},"2026-04":{numSessoes:1,pago:true,valorSessao:160},"2026-05":{numSessoes:1,pago:true,valorSessao:160},"2026-06":{numSessoes:1,pago:false,valorSessao:200}} },
+  { nome:"Márcio", valorSessao:160, meses:{"2025-02":{numSessoes:1,pago:true,valorSessao:100},"2025-03":{numSessoes:1,pago:true,valorSessao:100},"2025-04":{numSessoes:1,pago:true,valorSessao:75},"2025-05":{numSessoes:1,pago:true,valorSessao:100},"2025-06":{numSessoes:1,pago:true,valorSessao:75},"2025-07":{numSessoes:1,pago:true,valorSessao:125},"2025-08":{numSessoes:1,pago:true,valorSessao:100},"2025-09":{numSessoes:1,pago:true,valorSessao:100},"2025-10":{numSessoes:1,pago:true,valorSessao:125},"2025-11":{numSessoes:1,pago:true,valorSessao:100},"2025-12":{numSessoes:1,pago:true,valorSessao:75},"2026-01":{numSessoes:1,pago:true,valorSessao:75},"2026-02":{numSessoes:1,pago:true,valorSessao:75},"2026-03":{numSessoes:1,pago:true,valorSessao:100},"2026-04":{numSessoes:1,pago:true,valorSessao:200},"2026-05":{numSessoes:1,pago:true,valorSessao:160},"2026-06":{numSessoes:1,pago:false,valorSessao:160}} },
+  { nome:"Matheus", valorSessao:850, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:600},"2025-02":{numSessoes:1,pago:true,valorSessao:700},"2025-03":{numSessoes:1,pago:true,valorSessao:700},"2025-04":{numSessoes:1,pago:true,valorSessao:700},"2025-05":{numSessoes:1,pago:true,valorSessao:700},"2025-06":{numSessoes:1,pago:true,valorSessao:700},"2025-07":{numSessoes:1,pago:true,valorSessao:700},"2025-08":{numSessoes:1,pago:true,valorSessao:700},"2025-09":{numSessoes:1,pago:true,valorSessao:600},"2025-10":{numSessoes:1,pago:true,valorSessao:700},"2025-11":{numSessoes:1,pago:true,valorSessao:700},"2025-12":{numSessoes:1,pago:true,valorSessao:700},"2026-01":{numSessoes:1,pago:true,valorSessao:850},"2026-03":{numSessoes:1,pago:true,valorSessao:850},"2026-04":{numSessoes:1,pago:true,valorSessao:850}}, inactiveFrom:"2026-05" },
+  { nome:"Samuel", valorSessao:200, meses:{"2025-02":{numSessoes:1,pago:true,valorSessao:400},"2025-03":{numSessoes:1,pago:true,valorSessao:200}}, inactiveFrom:"2025-04" },
+  { nome:"Ton", valorSessao:160, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:160}}, inactiveFrom:"2025-02" },
+  { nome:"Valerie", valorSessao:240, meses:{"2025-01":{numSessoes:1,pago:true,valorSessao:260},"2025-02":{numSessoes:1,pago:true,valorSessao:260},"2025-03":{numSessoes:1,pago:true,valorSessao:260},"2025-04":{numSessoes:1,pago:true,valorSessao:260},"2025-05":{numSessoes:1,pago:true,valorSessao:320},"2025-06":{numSessoes:1,pago:true,valorSessao:240}}, inactiveFrom:"2025-07" },
+];
+
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -25,18 +41,24 @@ function loadData() {
       const d = JSON.parse(raw);
       return {
         atendimentos: d.atendimentos || [],
+        receitasAvulsas: d.receitasAvulsas || [],
         gastosFixos: d.gastosFixos || [],
         gastosAleatorios: d.gastosAleatorios || [],
       };
     }
   } catch (e) {}
-  return { atendimentos: [], gastosFixos: [], gastosAleatorios: [] };
+  return {
+    atendimentos: IMPORT_PACIENTES.map((p) => ({ id: uid(), createdAt: Date.now(), ...p })),
+    receitasAvulsas: [],
+    gastosFixos: [],
+    gastosAleatorios: [],
+  };
 }
 let data = loadData();
 function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 
 const now = new Date();
-let state = { tab: "receita", year: now.getFullYear(), month: now.getMonth(), editingId: null };
+let state = { tab: "receita", year: now.getFullYear(), month: now.getMonth(), editingId: null, receitaTipo: "paciente" };
 
 function monthKey(y, m) { return `${y}-${pad(m + 1)}`; }
 function inCurrentMonth(dateStr) { return !!dateStr && dateStr.slice(0, 7) === monthKey(state.year, state.month); }
@@ -56,14 +78,25 @@ function addMonths(dateStr, n) {
 }
 
 function getMes(item, key) {
-  return (item.meses && item.meses[key]) || { numSessoes: 0, pago: false };
+  const m = (item.meses && item.meses[key]) || {};
+  return {
+    numSessoes: m.numSessoes || 0,
+    pago: !!m.pago,
+    valorSessao: m.valorSessao != null ? m.valorSessao : item.valorSessao,
+  };
 }
 function setMes(item, key, patch) {
   if (!item.meses) item.meses = {};
-  item.meses[key] = { ...getMes(item, key), ...patch };
+  const cur = item.meses[key] || {};
+  item.meses[key] = { ...cur, ...patch };
 }
 function isActiveIn(p, mk) {
-  return !p.inactiveFrom || mk < p.inactiveFrom;
+  if (p.activeFrom && mk < p.activeFrom) return false;
+  if (p.inactiveFrom && mk >= p.inactiveFrom) return false;
+  return true;
+}
+function avulsosTotalFor(mk) {
+  return data.receitasAvulsas.filter((x) => x.data && x.data.slice(0, 7) === mk).reduce((s, x) => s + x.valor, 0);
 }
 function receitaTotals(items) {
   const mk = monthKey(state.year, state.month);
@@ -71,7 +104,7 @@ function receitaTotals(items) {
   items.forEach((p) => {
     if (!isActiveIn(p, mk)) return;
     const m = getMes(p, mk);
-    const total = p.valorSessao * m.numSessoes;
+    const total = m.valorSessao * m.numSessoes;
     if (m.pago) recebido += total; else aReceber += total;
   });
   return { recebido, aReceber };
@@ -83,16 +116,20 @@ function anualRows(year) {
     data.atendimentos.forEach((p) => {
       if (!isActiveIn(p, mk)) return;
       const rec = getMes(p, mk);
-      const total = p.valorSessao * rec.numSessoes;
+      const total = rec.valorSessao * rec.numSessoes;
       if (rec.pago) recebido += total; else aReceber += total;
     });
+    recebido += avulsosTotalFor(mk);
     return { m, label, recebido, aReceber };
   });
 }
+function fixosTotalFor(mk) {
+  return data.gastosFixos.filter((x) => isActiveIn(x, mk)).reduce((s, x) => s + x.valor, 0);
+}
 function gastosAnualRows(year) {
-  const fixosMensal = data.gastosFixos.reduce((s, x) => s + x.valor, 0);
   return MONTHS.map((label, m) => {
     const mk = monthKey(year, m);
+    const fixosMensal = fixosTotalFor(mk);
     const aleatorios = data.gastosAleatorios.filter((x) => x.data && x.data.slice(0, 7) === mk).reduce((s, x) => s + x.valor, 0);
     return { m, label, fixos: fixosMensal, aleatorios, total: fixosMensal + aleatorios };
   });
@@ -105,25 +142,27 @@ function economiaRows(year) {
 function isYearTab(tab) { return tab === "anual" || tab === "gastosanuais" || tab === "economias"; }
 
 function currentList() {
-  if (state.tab === "receita") return data.atendimentos;
+  if (state.tab === "receita") return state.receitaTipo === "avulso" ? data.receitasAvulsas : data.atendimentos;
   if (state.tab === "fixos") return data.gastosFixos;
   return data.gastosAleatorios;
 }
 
 function listFor(tab) {
+  const mk = monthKey(state.year, state.month);
   if (tab === "receita") {
-    const mk = monthKey(state.year, state.month);
     return data.atendimentos.filter((p) => isActiveIn(p, mk)).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   }
   if (tab === "fixos") {
-    return [...data.gastosFixos].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+    return data.gastosFixos.filter((x) => isActiveIn(x, mk)).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   }
   return data.gastosAleatorios.filter((x) => inCurrentMonth(x.data)).sort((a, b) => b.data.localeCompare(a.data) || a.createdAt - b.createdAt);
 }
 
 function totals() {
-  const { recebido, aReceber } = receitaTotals(data.atendimentos);
-  const fixos = data.gastosFixos.reduce((s, x) => s + x.valor, 0);
+  const mk = monthKey(state.year, state.month);
+  const { recebido: recebidoPacientes, aReceber } = receitaTotals(data.atendimentos);
+  const recebido = recebidoPacientes + avulsosTotalFor(mk);
+  const fixos = fixosTotalFor(mk);
   const aleatorios = data.gastosAleatorios.filter((x) => inCurrentMonth(x.data)).reduce((s, x) => s + x.valor, 0);
   const gastos = fixos + aleatorios;
   return { receita: recebido, aReceber, fixos, aleatorios, gastos, saldo: recebido - gastos };
@@ -195,7 +234,6 @@ function renderTabSwitch() {
 }
 
 function renderDatebar() {
-  $("datebar").classList.toggle("hidden", state.tab === "fixos");
   $("month-label").textContent = isYearTab(state.tab) ? String(state.year) : `${MONTHS[state.month]} de ${state.year}`;
 }
 
@@ -207,12 +245,7 @@ function stat(v, l) { return `<div class="stat"><div class="v">${v}</div><div cl
 
 function renderStats(items) {
   const wrap = document.createElement("div");
-  if (state.tab === "receita") {
-    const { recebido, aReceber } = receitaTotals(items);
-    const n = items.length;
-    wrap.className = "stats";
-    wrap.innerHTML = stat(money(recebido), "Recebido") + stat(money(aReceber), "A receber") + stat(String(n), n === 1 ? "Paciente" : "Pacientes");
-  } else if (state.tab === "fixos") {
+  if (state.tab === "fixos") {
     const total = items.reduce((s, x) => s + x.valor, 0);
     wrap.className = "stats cols-2";
     wrap.innerHTML = stat(money(total), "Total mensal") + stat(String(items.length), items.length === 1 ? "Gasto fixo" : "Gastos fixos");
@@ -226,7 +259,6 @@ function renderStats(items) {
 }
 
 function emptyMessage() {
-  if (state.tab === "receita") return '<div class="t">Nenhum paciente cadastrado</div><div class="s">Toque em "Novo" para adicionar o primeiro</div>';
   if (state.tab === "fixos") return '<div class="t">Nenhum gasto fixo cadastrado</div><div class="s">Aluguel, internet, assinaturas...</div>';
   return '<div class="t">Nenhum gasto neste mês</div><div class="s">Toque em "Novo" para adicionar</div>';
 }
@@ -237,13 +269,13 @@ function renderEntry(item) {
   let left, value;
   if (state.tab === "receita") {
     const m = getMes(item, monthKey(state.year, state.month));
-    value = item.valorSessao * m.numSessoes;
+    value = m.valorSessao * m.numSessoes;
     el.classList.toggle("paid", m.pago);
     left = `
       <button class="entry-check ${m.pago ? "on" : ""}" data-check type="button">✓</button>
       <div class="entry-body">
         <div class="entry-name">${escapeHtml(item.nome)}</div>
-        <div class="entry-date">${money(item.valorSessao)} × ${m.numSessoes} ${m.numSessoes === 1 ? "sessão" : "sessões"}</div>
+        <div class="entry-date">${money(m.valorSessao)} × ${m.numSessoes} ${m.numSessoes === 1 ? "sessão" : "sessões"}</div>
       </div>
     `;
   } else {
@@ -257,7 +289,7 @@ function renderEntry(item) {
     `;
   }
   el.innerHTML = `<div class="entry-left">${left}</div><div class="entry-value">${money(value)}</div>`;
-  el.addEventListener("click", () => openSheet(item));
+  el.addEventListener("click", () => openSheet(item, state.tab === "receita" ? "paciente" : undefined));
   if (state.tab === "receita") {
     el.querySelector("[data-check]").addEventListener("click", (e) => {
       e.stopPropagation();
@@ -288,6 +320,8 @@ function renderTabInto(container, tab) {
     renderGastosAnuais(container);
   } else if (tab === "economias") {
     renderEconomias(container);
+  } else if (tab === "receita") {
+    renderReceita(container);
   } else {
     const items = listFor(tab);
     container.appendChild(renderStats(items));
@@ -303,6 +337,70 @@ function renderTabInto(container, tab) {
     }
   }
   state.tab = savedTab;
+}
+
+function sectionLabel(text) {
+  const el = document.createElement("div");
+  el.className = "section-label";
+  el.textContent = text;
+  return el;
+}
+
+function renderReceita(container) {
+  const mk = monthKey(state.year, state.month);
+  const pacientes = listFor("receita");
+  const avulsos = data.receitasAvulsas
+    .filter((x) => x.data && x.data.slice(0, 7) === mk)
+    .sort((a, b) => b.data.localeCompare(a.data) || a.createdAt - b.createdAt);
+
+  const { recebido: recebidoPacientes, aReceber } = receitaTotals(pacientes);
+  const recebido = recebidoPacientes + avulsos.reduce((s, x) => s + x.valor, 0);
+
+  const statsWrap = document.createElement("div");
+  statsWrap.className = "stats";
+  statsWrap.innerHTML = stat(money(recebido), "Recebido") + stat(money(aReceber), "A receber") + stat(String(pacientes.length), pacientes.length === 1 ? "Paciente" : "Pacientes");
+  container.appendChild(statsWrap);
+
+  container.appendChild(sectionLabel("Pacientes"));
+  if (!pacientes.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.innerHTML = '<div class="t">Nenhum paciente cadastrado</div><div class="s">Toque em "Novo" para adicionar o primeiro</div>';
+    container.appendChild(empty);
+  } else {
+    const list = document.createElement("div");
+    pacientes.forEach((item) => list.appendChild(renderEntry(item)));
+    container.appendChild(list);
+  }
+
+  container.appendChild(sectionLabel("Receitas avulsas"));
+  if (!avulsos.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.innerHTML = '<div class="t">Nenhuma receita avulsa neste mês</div><div class="s">Toque em "Novo" → Outro</div>';
+    container.appendChild(empty);
+  } else {
+    const list = document.createElement("div");
+    avulsos.forEach((item) => list.appendChild(renderAvulsoEntry(item)));
+    container.appendChild(list);
+  }
+}
+
+function renderAvulsoEntry(item) {
+  const el = document.createElement("div");
+  el.className = "entry";
+  const sub = item.data ? `<div class="entry-date">${fmtDay(item.data)}</div>` : "";
+  el.innerHTML = `
+    <div class="entry-left">
+      <div class="entry-body">
+        <div class="entry-name">${escapeHtml(item.nome)}</div>
+        ${sub}
+      </div>
+    </div>
+    <div class="entry-value">${money(item.valor)}</div>
+  `;
+  el.addEventListener("click", () => openSheet(item, "avulso"));
+  return el;
 }
 
 function renderAnual(main) {
@@ -404,27 +502,46 @@ function renderEconomiaMonthRow(r) {
   return el;
 }
 
-function openSheet(item) {
+function openSheet(item, tipo) {
   state.editingId = item ? item.id : null;
+  state.receitaTipo = tipo || "paciente";
   $("f-nome").value = item ? item.nome : "";
   $("delete-btn").classList.toggle("hidden", !item);
+  $("field-fixo-periodo").classList.add("hidden");
 
   if (state.tab === "receita") {
-    const mk = monthKey(state.year, state.month);
-    const m = item ? getMes(item, mk) : { numSessoes: 0, pago: false };
-    $("sheet-title").textContent = item ? "Editar paciente" : "Novo paciente";
-    $("label-nome").textContent = "Paciente";
-    $("f-nome").placeholder = "Nome do paciente";
-    $("field-receita-valores").classList.remove("hidden");
-    $("field-valor").classList.add("hidden");
-    $("field-data").classList.add("hidden");
-    $("field-repeat").classList.add("hidden");
-    $("field-encerrar").classList.remove("hidden");
-    $("f-valor-sessao").value = item ? String(item.valorSessao).replace(".", ",") : "";
-    $("label-sessoes").textContent = `Sessões em ${MONTHS[state.month]}`;
-    $("f-sessoes").value = String(m.numSessoes);
-    $("f-encerrar").value = item ? (item.inactiveFrom || "") : "";
+    $("field-receita-tipo").classList.toggle("hidden", !!item);
+    document.querySelectorAll("#field-receita-tipo button").forEach((b) => b.classList.toggle("on", b.dataset.tipo === state.receitaTipo));
+
+    if (state.receitaTipo === "avulso") {
+      $("sheet-title").textContent = item ? "Editar receita avulsa" : "Nova receita avulsa";
+      $("label-nome").textContent = "Descrição";
+      $("f-nome").placeholder = "Ex: Consulta avulsa, palestra...";
+      $("field-receita-valores").classList.add("hidden");
+      $("field-encerrar").classList.add("hidden");
+      $("field-repeat").classList.add("hidden");
+      $("field-valor").classList.remove("hidden");
+      $("f-valor").value = item ? String(item.valor).replace(".", ",") : "";
+      $("field-data").classList.remove("hidden");
+      $("f-data").value = item ? item.data : defaultDateForAdd();
+    } else {
+      const mk = monthKey(state.year, state.month);
+      const m = item ? getMes(item, mk) : { numSessoes: 0, pago: false, valorSessao: 0 };
+      $("sheet-title").textContent = item ? "Editar paciente" : "Novo paciente";
+      $("label-nome").textContent = "Paciente";
+      $("f-nome").placeholder = "Nome do paciente";
+      $("field-receita-valores").classList.remove("hidden");
+      $("field-valor").classList.add("hidden");
+      $("field-data").classList.add("hidden");
+      $("field-repeat").classList.add("hidden");
+      $("field-encerrar").classList.remove("hidden");
+      $("f-valor-sessao").value = item ? String(m.valorSessao).replace(".", ",") : "";
+      $("label-sessoes").textContent = `Sessões em ${MONTHS[state.month]}`;
+      $("f-sessoes").value = String(m.numSessoes);
+      $("f-encerrar").value = item ? (item.inactiveFrom || "") : "";
+    }
   } else {
+    $("field-receita-tipo").classList.add("hidden");
     const f = FIELDS[state.tab];
     $("sheet-title").textContent = item ? `Editar ${f.title}` : `Novo ${f.title}`;
     $("label-nome").textContent = f.nomeLabel;
@@ -438,6 +555,11 @@ function openSheet(item) {
     const showRepeat = state.tab === "aleatorios" && !item;
     $("field-repeat").classList.toggle("hidden", !showRepeat);
     if (showRepeat) $("f-repeat").value = "1";
+    if (state.tab === "fixos") {
+      $("field-fixo-periodo").classList.remove("hidden");
+      $("f-inicio").value = item ? (item.activeFrom || "") : "";
+      $("f-fim").value = item ? (item.inactiveFrom || "") : "";
+    }
   }
   $("entry-sheet").classList.remove("hidden");
   $("f-nome").focus();
@@ -453,7 +575,17 @@ function saveEntry() {
   if (!nome) { $("f-nome").focus(); return; }
   const list = currentList();
 
-  if (state.tab === "receita") {
+  if (state.tab === "receita" && state.receitaTipo === "avulso") {
+    const valor = parseValor($("f-valor").value);
+    if (isNaN(valor) || valor < 0) { $("f-valor").focus(); return; }
+    const dataVal = $("f-data").value || defaultDateForAdd();
+    if (state.editingId) {
+      const item = list.find((x) => x.id === state.editingId);
+      if (item) { item.nome = nome; item.valor = valor; item.data = dataVal; }
+    } else {
+      list.push({ id: uid(), nome, valor, data: dataVal, createdAt: Date.now() });
+    }
+  } else if (state.tab === "receita") {
     const valorSessao = parseValor($("f-valor-sessao").value);
     const numSessoes = Math.max(0, parseInt($("f-sessoes").value, 10) || 0);
     if (isNaN(valorSessao) || valorSessao < 0) { $("f-valor-sessao").focus(); return; }
@@ -464,12 +596,12 @@ function saveEntry() {
       if (item) {
         item.nome = nome;
         item.valorSessao = valorSessao;
-        setMes(item, mk, { numSessoes });
+        setMes(item, mk, { numSessoes, valorSessao });
         if (encerrar) item.inactiveFrom = encerrar; else delete item.inactiveFrom;
       }
     } else {
       const item = { id: uid(), nome, valorSessao, meses: {}, createdAt: Date.now() };
-      setMes(item, mk, { numSessoes });
+      setMes(item, mk, { numSessoes, valorSessao });
       if (encerrar) item.inactiveFrom = encerrar;
       list.push(item);
     }
@@ -477,12 +609,18 @@ function saveEntry() {
     const valor = parseValor($("f-valor").value);
     if (isNaN(valor) || valor < 0) { $("f-valor").focus(); return; }
     const hasDate = FIELDS[state.tab].hasDate;
+    const inicio = state.tab === "fixos" ? $("f-inicio").value : "";
+    const fim = state.tab === "fixos" ? $("f-fim").value : "";
     if (state.editingId) {
       const item = list.find((x) => x.id === state.editingId);
       if (item) {
         item.nome = nome;
         item.valor = valor;
         if (hasDate) item.data = $("f-data").value || defaultDateForAdd();
+        if (state.tab === "fixos") {
+          if (inicio) item.activeFrom = inicio; else delete item.activeFrom;
+          if (fim) item.inactiveFrom = fim; else delete item.inactiveFrom;
+        }
       }
     } else if (state.tab === "aleatorios") {
       const baseDate = $("f-data").value || defaultDateForAdd();
@@ -493,6 +631,10 @@ function saveEntry() {
     } else {
       const item = { id: uid(), nome, valor, createdAt: Date.now() };
       if (hasDate) item.data = $("f-data").value || defaultDateForAdd();
+      if (state.tab === "fixos") {
+        if (inicio) item.activeFrom = inicio;
+        if (fim) item.inactiveFrom = fim;
+      }
       list.push(item);
     }
   }
@@ -618,11 +760,16 @@ $("tab-switch").addEventListener("click", (e) => {
 $("nav-back").addEventListener("click", () => (isYearTab(state.tab) ? navYear(-1) : navMonth(-1)));
 $("nav-fwd").addEventListener("click", () => (isYearTab(state.tab) ? navYear(1) : navMonth(1)));
 $("today-btn").addEventListener("click", goToday);
-$("add-btn").addEventListener("click", () => openSheet(null));
+$("add-btn").addEventListener("click", () => openSheet(null, state.tab === "receita" ? "paciente" : undefined));
 $("cancel-btn").addEventListener("click", closeSheet);
 $("save-btn").addEventListener("click", saveEntry);
 $("delete-btn").addEventListener("click", deleteEntry);
 $("entry-sheet").addEventListener("click", (e) => { if (e.target.id === "entry-sheet") closeSheet(); });
+$("field-receita-tipo").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-tipo]");
+  if (!btn) return;
+  openSheet(null, btn.dataset.tipo);
+});
 
 render();
 
