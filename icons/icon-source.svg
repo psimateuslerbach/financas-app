@@ -1,25 +1,14 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0.15" y2="1">
-      <stop offset="0%" stop-color="#F7C077" />
-      <stop offset="22%" stop-color="#EA9D4B" />
-      <stop offset="50%" stop-color="#C9752B" />
-      <stop offset="78%" stop-color="#9A5620" />
-      <stop offset="100%" stop-color="#5E2E0E" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E0973F" />
+      <stop offset="100%" stop-color="#8A4A1E" />
     </linearGradient>
-    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
-      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.16" />
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
-    </linearGradient>
-    <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3A1D08" stop-opacity="0" />
-      <stop offset="100%" stop-color="#3A1D08" stop-opacity="0.35" />
-    </linearGradient>
-    <linearGradient id="bill" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#FFF8E4" />
-      <stop offset="45%" stop-color="#F4E0AC" />
-      <stop offset="100%" stop-color="#DFBD79" />
+    <linearGradient id="bill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFEF8" />
+      <stop offset="46%" stop-color="#FBF0D4" />
+      <stop offset="54%" stop-color="#EAD29A" />
+      <stop offset="100%" stop-color="#D8B872" />
     </linearGradient>
     <linearGradient id="billBack" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#C89A54" />
@@ -64,9 +53,7 @@
 
   <g clip-path="url(#roundClip)">
     <rect x="0" y="0" width="512" height="512" fill="url(#bg)" />
-    <rect x="0" y="0" width="512" height="512" fill="url(#bottomShade)" />
-    <rect x="0" y="0" width="512" height="512" fill="url(#gloss)" />
-    <rect x="0" y="0" width="512" height="512" fill="none" stroke="#3E2109" stroke-opacity="0.4" stroke-width="6" />
+    <rect x="0" y="0" width="512" height="512" fill="none" stroke="#3E2109" stroke-opacity="0.35" stroke-width="6" />
   </g>
 
   <!-- cedula de tras -->
@@ -119,7 +106,4 @@
     </g>
   </g>
 
-  <g clip-path="url(#roundClip)">
-    <rect x="0" y="0" width="512" height="40" fill="#FFFFFF" opacity="0.22" />
-  </g>
 </svg>
