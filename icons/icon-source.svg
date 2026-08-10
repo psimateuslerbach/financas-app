@@ -82,9 +82,15 @@
     <circle r="36" fill="url(#coin)" stroke="#5A3414" stroke-width="4" />
     <circle r="27" fill="none" stroke="#5A3414" stroke-width="2" opacity="0.6" />
     <path d="M-10 -22 A 30 30 0 0 1 20 -6" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.6" stroke-linecap="round" />
-    <g transform="translate(0 3)">
-      <circle cx="0" cy="-13" r="10" fill="#5A3414" />
-      <path d="M -17 15 C -17 -1 -9 -3 0 -3 C 9 -3 17 -1 17 15 L 17 19 L -17 19 Z" fill="#5A3414" />
+    <g transform="translate(0 1)">
+      <rect x="-16" y="-21" width="32" height="42" rx="5" fill="#5A3414" />
+      <rect x="-12" y="-17" width="24" height="11" rx="1.5" fill="#F3E2B8" />
+      <rect x="-12" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+      <rect x="-3" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+      <rect x="6" y="-1" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+      <rect x="-12" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+      <rect x="-3" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
+      <rect x="6" y="8" width="6" height="6" rx="1.2" fill="#F3E2B8" />
     </g>
   </g>
 
