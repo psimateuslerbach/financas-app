@@ -7,12 +7,11 @@
       <stop offset="78%" stop-color="#9A5620" />
       <stop offset="100%" stop-color="#5E2E0E" />
     </linearGradient>
-    <radialGradient id="gloss" cx="50%" cy="6%" r="70%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
-      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.32" />
-      <stop offset="65%" stop-color="#FFFFFF" stop-opacity="0.05" />
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.16" />
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
-    </radialGradient>
+    </linearGradient>
     <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#3A1D08" stop-opacity="0" />
       <stop offset="100%" stop-color="#3A1D08" stop-opacity="0.35" />
@@ -67,7 +66,6 @@
     <rect x="0" y="0" width="512" height="512" fill="url(#bg)" />
     <rect x="0" y="0" width="512" height="512" fill="url(#bottomShade)" />
     <rect x="0" y="0" width="512" height="512" fill="url(#gloss)" />
-    <path d="M20 90 C 20 48 48 20 90 20 L 422 20 C 464 20 492 48 492 90" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round" />
     <rect x="0" y="0" width="512" height="512" fill="none" stroke="#3E2109" stroke-opacity="0.4" stroke-width="6" />
   </g>
 
