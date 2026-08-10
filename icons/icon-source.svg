@@ -67,8 +67,8 @@
     <g transform="translate(178 270)">
       <rect x="-44" y="-44" width="88" height="88" rx="8" fill="none" stroke="#7A4E22" stroke-width="4" opacity="0.5" transform="rotate(45)" />
       <rect x="-44" y="-44" width="88" height="88" rx="8" fill="none" stroke="#7A4E22" stroke-width="4" opacity="0.5" />
-      <circle r="30" fill="url(#seal)" stroke="#5A1018" stroke-width="3" />
-      <circle r="15" fill="none" stroke="#FCE3C8" stroke-width="2.5" opacity="0.85" />
+      <circle r="30" fill="url(#seal)" stroke="#FFFFFF" stroke-width="4" />
+      <circle r="15" fill="none" stroke="#83121F" stroke-width="2.5" opacity="0.6" />
     </g>
 
     <!-- R$ com efeito de relevo: sombra, luz, preenchimento -->
