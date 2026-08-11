@@ -95,8 +95,13 @@ function isActiveIn(p, mk) {
   if (p.inactiveFrom && mk >= p.inactiveFrom) return false;
   return true;
 }
-function avulsosTotalFor(mk) {
-  return data.receitasAvulsas.filter((x) => x.data && x.data.slice(0, 7) === mk).reduce((s, x) => s + x.valor, 0);
+function avulsosTotals(mk) {
+  let recebido = 0, aReceber = 0;
+  data.receitasAvulsas.forEach((x) => {
+    if (!x.data || x.data.slice(0, 7) !== mk) return;
+    if (x.recebido) recebido += x.valor; else aReceber += x.valor;
+  });
+  return { recebido, aReceber };
 }
 function receitaTotals(items) {
   const mk = monthKey(state.year, state.month);
@@ -119,7 +124,9 @@ function anualRows(year) {
       const total = rec.valorSessao * rec.numSessoes;
       if (rec.pago) recebido += total; else aReceber += total;
     });
-    recebido += avulsosTotalFor(mk);
+    const avulsos = avulsosTotals(mk);
+    recebido += avulsos.recebido;
+    aReceber += avulsos.aReceber;
     return { m, label, recebido, aReceber };
   });
 }
@@ -160,8 +167,10 @@ function listFor(tab) {
 
 function totals() {
   const mk = monthKey(state.year, state.month);
-  const { recebido: recebidoPacientes, aReceber } = receitaTotals(data.atendimentos);
-  const recebido = recebidoPacientes + avulsosTotalFor(mk);
+  const { recebido: recebidoPacientes, aReceber: aReceberPacientes } = receitaTotals(data.atendimentos);
+  const avulsos = avulsosTotals(mk);
+  const recebido = recebidoPacientes + avulsos.recebido;
+  const aReceber = aReceberPacientes + avulsos.aReceber;
   const fixos = fixosTotalFor(mk);
   const aleatorios = data.gastosAleatorios.filter((x) => inCurrentMonth(x.data)).reduce((s, x) => s + x.valor, 0);
   const gastos = fixos + aleatorios;
@@ -353,8 +362,10 @@ function renderReceita(container) {
     .filter((x) => x.data && x.data.slice(0, 7) === mk)
     .sort((a, b) => b.data.localeCompare(a.data) || a.createdAt - b.createdAt);
 
-  const { recebido: recebidoPacientes, aReceber } = receitaTotals(pacientes);
-  const recebido = recebidoPacientes + avulsos.reduce((s, x) => s + x.valor, 0);
+  const { recebido: recebidoPacientes, aReceber: aReceberPacientes } = receitaTotals(pacientes);
+  const avulsosT = avulsosTotals(mk);
+  const recebido = recebidoPacientes + avulsosT.recebido;
+  const aReceber = aReceberPacientes + avulsosT.aReceber;
 
   const statsWrap = document.createElement("div");
   statsWrap.className = "stats";
@@ -389,9 +400,11 @@ function renderReceita(container) {
 function renderAvulsoEntry(item) {
   const el = document.createElement("div");
   el.className = "entry";
+  el.classList.toggle("paid", !!item.recebido);
   const sub = item.data ? `<div class="entry-date">${fmtDay(item.data)}</div>` : "";
   el.innerHTML = `
     <div class="entry-left">
+      <button class="entry-check ${item.recebido ? "on" : ""}" data-check type="button">✓</button>
       <div class="entry-body">
         <div class="entry-name">${escapeHtml(item.nome)}</div>
         ${sub}
@@ -400,7 +413,17 @@ function renderAvulsoEntry(item) {
     <div class="entry-value">${money(item.valor)}</div>
   `;
   el.addEventListener("click", () => openSheet(item, "avulso"));
+  el.querySelector("[data-check]").addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleAvulsoRecebido(item);
+  });
   return el;
+}
+
+function toggleAvulsoRecebido(item) {
+  item.recebido = !item.recebido;
+  saveData();
+  render();
 }
 
 function renderAnual(main) {
@@ -519,11 +542,13 @@ function openSheet(item, tipo) {
       $("f-nome").placeholder = "Ex: Consulta avulsa, palestra...";
       $("field-receita-valores").classList.add("hidden");
       $("field-encerrar").classList.add("hidden");
-      $("field-repeat").classList.add("hidden");
       $("field-valor").classList.remove("hidden");
       $("f-valor").value = item ? String(item.valor).replace(".", ",") : "";
       $("field-data").classList.remove("hidden");
       $("f-data").value = item ? item.data : defaultDateForAdd();
+      const showRepeatAvulso = !item;
+      $("field-repeat").classList.toggle("hidden", !showRepeatAvulso);
+      if (showRepeatAvulso) $("f-repeat").value = "1";
     } else {
       const mk = monthKey(state.year, state.month);
       const m = item ? getMes(item, mk) : { numSessoes: 0, pago: false, valorSessao: 0 };
@@ -583,7 +608,10 @@ function saveEntry() {
       const item = list.find((x) => x.id === state.editingId);
       if (item) { item.nome = nome; item.valor = valor; item.data = dataVal; }
     } else {
-      list.push({ id: uid(), nome, valor, data: dataVal, createdAt: Date.now() });
+      const repeat = Math.max(1, parseInt($("f-repeat").value, 10) || 1);
+      for (let i = 0; i < repeat; i++) {
+        list.push({ id: uid(), nome, valor, data: addMonths(dataVal, i), recebido: false, createdAt: Date.now() + i });
+      }
     }
   } else if (state.tab === "receita") {
     const valorSessao = parseValor($("f-valor-sessao").value);
